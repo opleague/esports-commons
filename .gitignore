@@ -1,0 +1,15 @@
+/target/
+/.settings/
+/.settings/**
+/.settings/*
+/.factorypath
+/.classpath
+/.project
+/.git/
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
