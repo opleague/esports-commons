@@ -18,7 +18,7 @@ public interface MatchRepository extends JpaRepository<MatchEntity, Long>{
 	@Query(nativeQuery = true, value = "update matches set active = false where id = ?1")
 	int deleteEnityById(Long id);
 	
-	@Query("select m from matches m LEFT JOIN FETCH m.matchTeam mt LEFT JOIN FETCH m.matchcontest mc LEFT JOIN FETCH"
+	@Query("select m from matches m JOIN FETCH m.matchTeam mt JOIN FETCH m.matchcontest mc JOIN FETCH"
 			+ " mt.team" )
 	List<MatchEntity> findAllEntities();
 	
