@@ -30,4 +30,8 @@ public interface ContestRepository extends JpaRepository<ContestEntity, Long>{
 	@Query(value = " select c.entryFee from contest c where id =:contestId  and c.active = true ", 
 			nativeQuery = true)
 	Object[] findContestById(@Param(value = "contestId")Long contestId);
+	
+	@Query(value = " select  c.spots, c.entryFee from contest c where c.id =:contestId  and c.active = true ", 
+			nativeQuery = true)
+	List<Object[]> findRecordById(Long contestId);
 }

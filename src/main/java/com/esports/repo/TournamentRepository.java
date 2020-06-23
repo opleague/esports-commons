@@ -26,4 +26,8 @@ public interface TournamentRepository extends JpaRepository<TournamentEntity, Lo
 	List<TournamentEntity> findAllByEsportIdAndStartTime(@Param(value ="esportId" )Long esportId, 
 			@Param(value ="now" )Date now, Pageable pageable);
 
+	@Transactional(readOnly = true)
+	@Query(nativeQuery = true,value = "select t.* from tournament t where t.id = (select tournamentId from matches where id = ?1 and active= true)and t.active= true")
+	TournamentEntity findRecordUsingMatchId(Long matchId);
+
 }
