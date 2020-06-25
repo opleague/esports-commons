@@ -2,6 +2,7 @@ package com.esports.repo;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,5 +36,8 @@ public interface MatchRepository extends JpaRepository<MatchEntity, Long>{
 	@Transactional(readOnly = true)
 	@Query(nativeQuery = true,value = "select count(1) from matches group by tournamentId having tournamentId = ?1")
 	int findTotalCountByTournamentId(Long tournamentId);
+	
+	@Query(nativeQuery = true,value = "select id,tournamentId,matchNumber,credits,endTime,startTime,matchMap,name from matches where id IN (?1) and active = true")
+	List<Object[]> findAllByIdIn(Set<Long> matchIds);
 
 }
