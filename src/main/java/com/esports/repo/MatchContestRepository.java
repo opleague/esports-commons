@@ -34,7 +34,7 @@ public interface MatchContestRepository extends JpaRepository<MatchContestEntity
 
 	@Query(nativeQuery = true, value = "select umc.id from user_match_contest umc where "
 			+ " umc.matchContestId  in (select mc.id from match_contest mc where mc.match_id =?1 and mc.active = true) "
-			+ " and umc.status = 'PAID' and umc.active = true")
+			+ " and umc.status = 'PAID' and umc.active = true and userId = ?2")
 	List<BigInteger> findAllByMatchId(Long matchId, Long userId);
 
 }
