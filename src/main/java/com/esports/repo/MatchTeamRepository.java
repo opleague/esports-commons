@@ -18,11 +18,11 @@ public interface MatchTeamRepository extends JpaRepository<MatchTeamEntity, Long
 	int deleteEnityById(Long id);
 	
 	@Query(nativeQuery = true,
-			value = "select p.id,p.displayName, p.credits, p.imageUrl,tm.team_id,t.displayName as teamName from player p "
+			value = "select p.id,p.displayName, p.credits, p.imageUrl,tm.team_id,t.displayName as teamName,tm.match_id  from player p "
 					+ " inner join team_players tp on tp.playerId = p.id "
 					+ " inner join team_match tm on tm.team_id = tp.teamId "
-					+ " inner join team t on t.id = tp.teamId where tm.match_id = ?1 "
+					+ " inner join team t on t.id = tp.teamId where tm.match_id = (select match_id from match_contest where id = ?1) "
 					+ " and tm.active = true and p.active = true and tp.active = true and t.active = true")
-	List<Object[]> findByMatchId(Long matchId);
+	List<Object[]> findByMatchId(Long matchContestId);
 
 }
