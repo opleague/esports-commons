@@ -24,7 +24,7 @@ public class CommonWalletTransactionService {
 
 	}
 
-	public boolean deductMoneyFromWallet(Long userId, String source, double amount, Long transactionId,
+	public boolean deductMoneyFromWallet(Long userId, String source, double amount, String transactionId,
 			WalletEntity walletEntity) {
 		WalletTransactionEntity walletTransactionEntity = new WalletTransactionEntity();
 		walletTransactionEntity.setUserId(userId);
@@ -57,7 +57,7 @@ public class CommonWalletTransactionService {
 		walletRespository.save(walletEntity);
 	}
 
-	public void addMoneytotheWallet(long userId, String source, double amount, Long transactionId,WalletEntity walletEntity) {
+	public void addMoneytotheWallet(long userId, String source, double amount, String transactionId,WalletEntity walletEntity) {
 		WalletTransactionEntity walletTransactionEntity = new WalletTransactionEntity();
 		walletTransactionEntity.setUserId(userId);
 		walletTransactionEntity.setSource(source);
@@ -67,7 +67,7 @@ public class CommonWalletTransactionService {
 		updateWallet(walletEntity,walletTransactionEntity);
 	}
 	
-	public void addMoneytotheWallet(long userId, String source,String transactionType, double amount, Long transactionId,WalletEntity walletEntity) {
+	public void addMoneytotheWallet(long userId, String source,String transactionType, double amount, String transactionId,WalletEntity walletEntity) {
 		WalletTransactionEntity walletTransactionEntity = new WalletTransactionEntity();
 		walletTransactionEntity.setUserId(userId);
 		walletTransactionEntity.setSource(source);
