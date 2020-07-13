@@ -22,11 +22,11 @@ public interface TournamentRepository extends JpaRepository<TournamentEntity, Lo
 	List<TournamentEntity> findAllByEsportId(Long esportId, Pageable pageable);
 	
 	@Transactional(readOnly = true)
-	@Query(nativeQuery = true,value = "select * from tournament where esportId=:esportId and endTime is not null and endTime>:now and startTime>:now and startTime < endTime and active= true")
+	@Query(nativeQuery = true,value = "select * from tournament where esportId=:esportId and endTime is not null and endTime>:now and startTime < endTime and active= true")
 	List<TournamentEntity> findAllByEsportIdAndStartTime(@Param(value ="esportId" )Long esportId, 
 			@Param(value ="now" )Date now, Pageable pageable);
 	
-	@Query(nativeQuery = true,value = "select * from tournament where endTime is not null and endTime>:now and startTime>:now and startTime < endTime and active= true")
+	@Query(nativeQuery = true,value = "select * from tournament where endTime is not null and endTime>:now and startTime < endTime and active= true")
 	List<TournamentEntity> findAllByStartTime(
 			@Param(value ="now" )Date now, Pageable pageable);
 

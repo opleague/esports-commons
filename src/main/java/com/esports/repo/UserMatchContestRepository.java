@@ -35,5 +35,10 @@ public interface UserMatchContestRepository extends JpaRepository<UserMatchConte
 			value = "select userTeamId,userId,matchContestId  from user_match_contest "
 					+ " where matchContestId in (:matchContestIds) and active = true and status = 'PAID'" )
 	List<Object[]> findByMatchContestIdAndActiveTrue(@Param(value="matchContestIds")Set<Long> matchContestIds);
-
+	
+	@Query(nativeQuery = true,
+			value = "select id,startTime,endTime from matches where id = ( select match_id  from match_contest "
+					+ " where id =:matchContestId and active = true ) and active = true")
+	List<Object[]> findMatchByMatchContestIdAndActiveTrue(@Param(value="matchContestId") Long matchContestId);
+	
 }
