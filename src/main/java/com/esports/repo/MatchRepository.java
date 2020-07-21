@@ -25,7 +25,7 @@ public interface MatchRepository extends JpaRepository<MatchEntity, Long>{
 	
 	@Transactional(readOnly = true)
 	@Query("select m from matches m LEFT JOIN FETCH m.matchTeam mt LEFT JOIN FETCH m.matchcontest mc LEFT JOIN FETCH"
-			+ " mt.team where m.endTime > ?2 and m.tournamentId = ?1 and m.active = true" )	
+			+ " mt.team where m.endTime > ?2 and m.startTime > ?2 and m.startTime < m.endTime and m.tournamentId = ?1 and m.active = true" )	
 	List<MatchEntity> findAllByTournamentIdAndStartTime(Long tournamentId, Date startTime, Pageable pageable);
 	
 	@Transactional(readOnly = true)
