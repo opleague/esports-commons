@@ -40,7 +40,7 @@ public interface MatchRepository extends JpaRepository<MatchEntity, Long>{
 	@Query(nativeQuery = true,value = "select id,tournamentId,matchNumber,credits,endTime,startTime,matchMap,name from matches where id IN (?1) and active = true")
 	List<Object[]> findAllByIdIn(Set<Long> matchIds);
 	
-	@Query(nativeQuery = true,value = "select matchNumber , matchMap,startTime from matches where id =?1 and active = true")
+	@Query(nativeQuery = true,value = "select matchNumber,matchMap,startTime,name,endTime,credits from matches where id =?1 and active = true")
 	List<Object[]> findMatchById(Long matchId);
 
 }
