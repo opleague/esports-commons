@@ -12,7 +12,7 @@ import com.esports.entities.UserMatchContestEntity;
 
 public interface UserMatchContestRepository extends JpaRepository<UserMatchContestEntity, Long>{
 
-	List<UserMatchContestEntity> findByUserIdAndMatchContestIdAndActiveTrue(Long userId, long matchContestId);
+	List<UserMatchContestEntity> findByUserIdAndMatchContestIdAndActiveTrueOrderById(Long userId, long matchContestId);
 
 	UserMatchContestEntity findRecordById(Long userMatchContestId);
 
