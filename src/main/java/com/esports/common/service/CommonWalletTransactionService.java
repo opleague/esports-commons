@@ -23,33 +23,6 @@ public class CommonWalletTransactionService {
 	public void addMoneytotheWallet(Long userId) {
 
 	}
-
-	public boolean deductMoneyFromWallet(Long userId, String source, double amount, String transactionId,
-			WalletEntity walletEntity) {
-		WalletTransactionEntity walletTransactionEntity = new WalletTransactionEntity();
-		walletTransactionEntity.setUserId(userId);
-		walletTransactionEntity.setSource(source);
-		walletTransactionEntity.setAmount(amount);
-		walletTransactionEntity.setTransactionType(TransactionType.MT.name());
-		walletTransactionEntity.setTransactionId(transactionId);
-		Double bonus = walletEntity.getBonusamount();
-		Double userAmount = walletEntity.getUseramount();
-		userAmount = userAmount == null ? new Double(0) : userAmount;
-		bonus = bonus == null ? new Double(0) : bonus;
-		double totalWalletAmount = bonus + userAmount;
-		if(totalWalletAmount < amount) {
-			return false;
-		}
-		double remAmount = totalWalletAmount - amount;
-		walletEntity.setBonusamount(remAmount);
-		try{
-			updateWallet(walletEntity,walletTransactionEntity);
-			return true;
-		}catch (Exception e) {
-			//return false;
-		}
-		return false;
-	}
 	
 	@Transactional(rollbackOn = SQLException.class)
 	private void updateWallet(WalletEntity walletEntity, WalletTransactionEntity walletTransactionEntity) {
@@ -83,5 +56,30 @@ public class CommonWalletTransactionService {
 		walletTransactionRepository.saveAll(walletTransactionEntities);
 		walletRespository.saveAll(walletEntities);
 		
+	}
+	
+	public boolean withDrawMoneyFromWallet(Long userId, String source, double amount, String transactionId,
+			WalletEntity walletEntity) {
+		WalletTransactionEntity walletTransactionEntity = new WalletTransactionEntity();
+		walletTransactionEntity.setUserId(userId);
+		walletTransactionEntity.setSource(source);
+		walletTransactionEntity.setAmount(amount);
+		walletTransactionEntity.setTransactionType(TransactionType.WD.name());
+		walletTransactionEntity.setTransactionId(transactionId);
+		Double userAmount = walletEntity.getUseramount();
+		userAmount = userAmount == null ? new Double(0) : userAmount;
+		
+		if(userAmount < amount) {
+			return false;
+		}
+		double remAmount = userAmount - amount;
+		walletEntity.setUseramount(remAmount);
+		try{
+			updateWallet(walletEntity,walletTransactionEntity);
+			return true;
+		}catch (Exception e) {
+			//return false;
+		}
+		return false;
 	}
 }
