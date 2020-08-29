@@ -27,4 +27,10 @@ public interface MatchStatRepository extends JpaRepository<MatchStatsEntity, Lon
 	
 	List<MatchStatsEntity> findByMatchIdAndActiveTrue(Long matchId);
 	
+	@Query(nativeQuery = true,
+			value = "select count,points,player_id from match_stats where active = true and "
+					+ " match_id = ?1 and "
+					+ " attack_type_id = (?2) ")
+	List<Object[]> findByMatchIdAndActiveTrue(Long matchId, int attackTypeId);
+	
 }
